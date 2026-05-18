@@ -157,15 +157,17 @@
 
         // Получаем параметры из URL
         const params = new URLSearchParams(window.location.search);
-        const blockId = params.get('blockId') || '30403';
+        const blockId = params.get('blockId') || '30407';
         const limit = params.get('limit') || '5';
+        // AdsGram SDK для ботов требует префикс "bot-"
+        const fullBlockId = blockId.startsWith('bot-') ? blockId : 'bot-' + blockId;
 
         document.getElementById('limitValue').textContent = limit;
 
         // Инициализация AdsGram
         let AdController = null;
         try {
-            AdController = window.Adsgram.init({ blockId: blockId });
+            AdController = window.Adsgram.init({ blockId: fullBlockId });
         } catch (e) {
             console.error('AdsGram init error:', e);
         }
